@@ -1,9 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"; // ✅ use correct adapter
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -44,14 +43,14 @@ export const authOptions: NextAuthOptions = {
     session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as User["role"];
+        session.user.role = token.role as "GOVERNMENT_OFFICIAL" | "SCHOOL_ADMIN" | "CAREGIVER";
       }
       return session;
     },
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as User).role;
+        token.role = user.role as "GOVERNMENT_OFFICIAL" | "SCHOOL_ADMIN" | "CAREGIVER";
       }
       return token;
     }
@@ -66,5 +65,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };

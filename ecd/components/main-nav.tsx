@@ -12,10 +12,10 @@ export function MainNav({
 
   const routes = [
     { href: "/", label: "Dashboard", active: pathname === "/" },
-    { href: "/children", label: "Children", active: pathname.startsWith("/children") },
-    { href: "/schools", label: "Schools", active: pathname.startsWith("/schools") },
-    { href: "/staff", label: "Staff", active: pathname.startsWith("/staff") },
-    { href: "/reports", label: "Reports", active: pathname.startsWith("/reports") },
+    { href: "/dashboard/children", label: "Children", active: pathname.startsWith("/dashboard/children") },
+    { href: "/dashboard/schools", label: "Schools", active: pathname.startsWith("/dashboard/schools") },
+    { href: "/dashboard/staff", label: "Staff", active: pathname.startsWith("/dashboard/staff") },
+    { href: "/dashboard/reports", label: "Reports", active: pathname.startsWith("/dashboard/reports") },
   ]
 
   return (
